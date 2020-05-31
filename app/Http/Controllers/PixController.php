@@ -25,12 +25,14 @@ class PixController extends Controller
             ->where(['pixs.id' => $id])
             ->select('*', 'pixs.id as pix_id', 'users.name as user_name', 'users.id as user_id', 'users.avatar as avatar', 'users.bio as user_bio')
             ->first();
-
-        DB::table('pixs')
+        if ($pix == null) {
+            return view('404');
+        }else{
+            DB::table('pixs')
             ->where(['id' => $id])
             ->increment('view');
-
-        return view('view')->with(['pix' => $pix]);
+            return view('view')->with(['pix' => $pix]);
+        }
     }
     public function new()
     {

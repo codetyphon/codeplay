@@ -98,37 +98,7 @@
         );
     }
 
-    function App() {
-        const name = 'codeplay.buzz';
-        const css={
-            textAlign:'center',
-        }
-        return (
-            <Container maxWidth="sm">
-            <div class="code" style={css}>
-                <p>&nbsp;</p>
-                <Card>
-                    <CardActionArea>
-                        <CardMedia
-                        image="{{ $pix->avatar }}"
-                        title="{{ $pix->user_name }}"
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {{ $pix->user_name }}
-                        </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                    {{ $pix->user_bio }}
-                    </CardActions>
-                </Card>
-            </div>
-            </Container>
-        );
-    }
-
-    class Pix extends React.Component {
+    class About extends React.Component {
         componentDidMount(){
             let width=200;
             let height=200;
@@ -148,39 +118,32 @@
             function create (){
                 var pixelWidth = 10;
                 var pixelHeight = 10;
-                var chick = [{!! $pix->code !!}];
+                var chick = [
+                    '...55.......',
+                    '.....5......',
+                    '...7888887..',
+                    '..788888887.',
+                    '..888088808.',
+                    '..888886666.',
+                    '..8888644444',
+                    '..8888645555',
+                    '888888644444',
+                    '88788776555.',
+                    '78788788876.',
+                    '56655677776.',
+                    '456777777654',
+                    '.4........4.'
+                ]
                 this.textures.generate('chick', { data: chick, pixelWidth: pixelWidth });
                 this.add.image(width/2,height/2, 'chick');
             }
         }
         render() {
-            let css={
-                margin:'10px'
-            }
-            let code={
-                width:'120px',
-                margin: '0 auto',
-                textAlign: 'center',
-                letterSpacing: '2px'
-            }
             return(
                 <div>
-                    <h1>{{ $pix->title }}</h1>
-                    <p><a href="/{{ $pix->user_name }}">{{ $pix->user_name }}</a> 创建于 {{ $pix->time }} </p>
-                    <p>被访问{{ $pix->view }}次</p>
-                    <h3>code:</h3>
-                    <p style={code}>{{ $pix->code }}</p>
-                    <h3>canvas:</h3>
-                    <div style={css} id="canvas"></div>
-
-                    <p>&nbsp;</p>
-                    <Button variant="contained" color="primary" href="/fork/{{ $pix->pix_id }}">
-                        fork
-                    </Button>
-                    &nbsp;
-                    <Button variant="contained" color="primary" href="/new">
-                        create new
-                    </Button>
+                    <h1>404</h1>
+                    <div id="canvas"></div>
+                    <p>页面没有被创建，或已经被删除。</p>
                 </div>
             )
         }
@@ -191,7 +154,7 @@
             <CssBaseline />
             <Nav />
             <Head />
-            <Pix />
+            <About />
             <Footer />
         </ThemeProvider>,
         document.getElementById('app')

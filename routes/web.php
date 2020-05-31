@@ -27,6 +27,7 @@ Route::get('/logout', 'UserController@page_logout');
 Route::get('/{username}', 'UserController@username');
 
 Route::get('/', 'UserController@welcome');
+Route::get('/json/info', 'UserController@info');
 
 
 

@@ -18,6 +18,13 @@ class UserController extends Controller
         }
     }
 
+    public function info()
+    {
+        $pix_count = DB::table('pixs')->count();
+        $user_count = DB::table('users')->count();
+        return response()->json(['pixs' => $pix_count, 'users' => $user_count]);
+    }
+
     public function about()
     {
         return view('about');
@@ -30,7 +37,7 @@ class UserController extends Controller
             return view('404');
         } else {
             $pixs = DB::table('pixs')->where(['user_id' => $user->id])->orderBy('time', 'desc')
-            ->paginate(10);
+                ->paginate(10);
             return view('list')->with(['user' => $user, 'pixs' => $pixs]);
         }
     }
