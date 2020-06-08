@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mockery\Undefined;
 use Socialite;
 
 class UserController extends Controller
 {
     public function welcome()
     {
-        if (session()->get('user')) {
-            $user_name = session()->get('user')->name;
-            return redirect()->to('/' . $user_name);
-        } else {
-            return view('welcome');
-        }
+        // return view('welcome');
+        return redirect()->to('/discover');
     }
 
     public function info()
@@ -24,6 +21,22 @@ class UserController extends Controller
         $user_count = DB::table('users')->count();
         return response()->json(['pixs' => $pix_count, 'users' => $user_count]);
     }
+
+    public function user()
+    {
+        if (session()->get('user')) {
+            return response()->json(session()->get('user'));
+        } else {
+            return response()->json(false);
+        }
+    }
+
+    public function users()
+    {
+        $users = DB::table('users')->get();
+        return view('users')->with(['users' => $users]);
+    }
+
 
     public function about()
     {

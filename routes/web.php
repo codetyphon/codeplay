@@ -24,10 +24,19 @@ Route::get('login/', 'UserController@redirectToProvider');
 Route::get('login/callback', 'UserController@handleProviderCallback');
 Route::get('/about', 'UserController@about');
 Route::get('/logout', 'UserController@page_logout');
+
+Route::get('/users', 'UserController@users');
+Route::get('/discover', 'PixController@discover');
 Route::get('/{username}', 'UserController@username');
+
+
 
 Route::get('/', 'UserController@welcome');
 Route::get('/json/info', 'UserController@info');
+Route::get('/json/user', 'UserController@user');
+Route::get('/json/messages/{pix}', 'MsgController@list');
+Route::post('/json/messages', 'MsgController@save');
+
 
 
 

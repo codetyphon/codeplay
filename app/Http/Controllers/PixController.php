@@ -27,17 +27,17 @@ class PixController extends Controller
             ->first();
         if ($pix == null) {
             return view('404');
-        }else{
+        } else {
             DB::table('pixs')
-            ->where(['id' => $id])
-            ->increment('view');
+                ->where(['id' => $id])
+                ->increment('view');
             return view('view')->with(['pix' => $pix]);
         }
     }
     public function new()
     {
-        $code="'.0123456789ABCDEFG.'";
-        return view('new')->with(['code'=>$code]);
+        $code = "'.01234567','89ABCDEFG.'";
+        return view('new')->with(['code' => $code]);
     }
 
     public function fork($id)
@@ -45,10 +45,9 @@ class PixController extends Controller
         $pix = DB::table('pixs')->where(['id' => $id])->first();
         if ($pix == null) {
             return view('404');
-        }else{
-            return view('new')->with(['code'=>$pix->code]);
+        } else {
+            return view('new')->with(['code' => $pix->code]);
         }
-
     }
 
     public function save(Request $request)
@@ -57,13 +56,23 @@ class PixController extends Controller
             $user_id = session()->get('user')->id;
             $title = $request->input('title');
             $code = $request->input('code');
-            if($title==""){
-                $title="未命名像素画";
+            if ($title == "") {
+                $title = "未命名像素画";
             }
             DB::table('pixs')->insert(['title' => $title, 'code' => $code, 'user_id' => $user_id]);
             return response()->json(['err' => false, 'msg' => 'saved']);
         } else {
             return response()->json(['err' => true, 'msg' => 'session']);
         }
+    }
+
+    public function discover()
+    {
+        $pixs = DB::table('pixs')
+            ->join('users', 'pixs.user_id', '=', 'users.id')
+            ->orderBy('time', 'desc')
+            ->select('pixs.id as pix_id','pixs.title as title','pixs.code as code','users.id as user_id','users.name as username','users.avatar as avatar')
+            ->paginate(10);
+        return view('discover')->with(['pixs' => $pixs]);
     }
 }
