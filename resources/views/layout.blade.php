@@ -50,8 +50,8 @@
 @yield('const')
 <script type="text/babel" src="/jsx/top.jsx?v3.2"></script>
 <script type="text/babel" src="/jsx/head.jsx"></script>
-<script type="text/babel" src="/jsx/pix.jsx"></script>
-<script type="text/babel" src="/jsx/pixedit.jsx"></script>
+<script type="text/babel" src="/jsx/pix.jsx?v1"></script>
+<script type="text/babel" src="/jsx/pixedit.jsx?v1"></script>
 <script type="text/babel" src="/jsx/footer.jsx"></script>
 @yield('render')
 </html>

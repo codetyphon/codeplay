@@ -30,7 +30,8 @@
         <h1>{{ $pix->title }}</h1>
         <p><a href="/{{ $pix->user_name }}">{{ $pix->user_name }}</a> 创建于 {{ $pix->time }} </p>
         <p>被访问{{ $pix->view }}次</p>
-        <Pix code="{!! $pix->code !!}" />
+        <p>像素尺寸{{ $pix->size }}</p>
+        <Pix code="{!! $pix->code !!}" size={{!! $pix->size !!}} />
         <p style={code}>{{ $pix->code }}</p>
         <p>&nbsp;</p>
         <Button variant="primary" href="/fork/{{ $pix->pix_id }}">

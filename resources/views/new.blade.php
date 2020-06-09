@@ -2,14 +2,22 @@
 
 @section('style')
 <style>
+    .flex {
+        flex-direction: row;
+        align-items: center;
+        display: inline-flex;
+    }
 
+    .edit {
+        width: 300px;
+    }
 </style>
 @stop
 
 @section('const')
 <script type="text/babel">
     const { useState, useEffect, useContext } = React;
-    const {Button,FormControl,Modal,Navbar,Nav,NavDropdown} = ReactBootstrap;
+    const {Button,FormControl,Modal,Navbar,Nav,NavDropdown,InputGroup} = ReactBootstrap;
 </script>
 @stop
 
@@ -18,8 +26,8 @@
     ReactDOM.render(
         <div>
             <Top />
-            <Head />
-            <PixEdit title="未命名像素画" id="0" code="{!! $code !!}" token="{{ csrf_token() }}" />
+            <p><br/></p>
+            <PixEdit title="{{ $title }}" id="0" size="{{ $size }}" code="{!! $code !!}" token="{{ csrf_token() }}" />
             <Footer />
         </div>,
         document.getElementById('app')

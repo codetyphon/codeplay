@@ -41,7 +41,7 @@
                 @foreach($pixs as $pix)
                 <ListGroup.Item action href="/pix/{{ $pix->id }}" key="{{ $pix->id }}">
                 {{ $pix->title }}
-                <Pix id={"{{ $pix->id }}"} code="{!! $pix->code !!}"/>
+                <Pix size={"{{ $pix->size }}"} id={"{{ $pix->id }}"} code="{!! $pix->code !!}"/>
                 </ListGroup.Item>
                 @endforeach
                 </ListGroup>

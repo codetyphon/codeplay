@@ -51,10 +51,13 @@ return (
         <Card.Body>
             <Card.Title>{{ $pix->title }}</Card.Title>
             <Card.Text>
-            <div className="author">作者：<img src="{{ $pix->avatar }}" width="30" height="30" /> {{ $pix->username }}</div>
-            <Pix className="pix" id={"{{ $pix->pix_id }}"} code="{!! $pix->code !!}" />
+            <a href="/{{ $pix->username }}"><div className="author">作者：<img src="{{ $pix->avatar }}" width="30" height="30" /> {{ $pix->username }}</div></a>
+            <a href="/pix/{{ $pix->pix_id }}">
+            <Pix className="pix" size={"{{ $pix->size }}"} id={"{{ $pix->pix_id }}"} code="{!! $pix->code !!}" />
+            </a>
             </Card.Text>
-            <Button href={"/pix/{{ $pix->pix_id }}"} variant="primary">点击查看详细</Button>
+            <Button href="/pix/{{ $pix->pix_id }}" variant="primary">点击查看详细</Button>
+
         </Card.Body>
     </Card>
     @endforeach
@@ -67,7 +70,6 @@ return (
 ReactDOM.render(
 <div>
     <Top />
-    <Head />
     <App />
     <Footer />
 </div>,

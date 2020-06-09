@@ -36,8 +36,8 @@ class PixController extends Controller
     }
     public function new()
     {
-        $code = "'.01234567','89ABCDEFG.'";
-        return view('new')->with(['code' => $code]);
+        $code = "'.01234567','89ABCDEFG'";
+        return view('new')->with(['code' => $code, 'title' => '', 'size' => 10]);
     }
 
     public function fork($id)
@@ -46,7 +46,7 @@ class PixController extends Controller
         if ($pix == null) {
             return view('404');
         } else {
-            return view('new')->with(['code' => $pix->code]);
+            return view('new')->with(['title' => $pix->title, 'code' => $pix->code, 'size' => $pix->size]);
         }
     }
 
@@ -56,10 +56,11 @@ class PixController extends Controller
             $user_id = session()->get('user')->id;
             $title = $request->input('title');
             $code = $request->input('code');
+            $size = $request->input('size');
             if ($title == "") {
                 $title = "未命名像素画";
             }
-            DB::table('pixs')->insert(['title' => $title, 'code' => $code, 'user_id' => $user_id]);
+            DB::table('pixs')->insert(['title' => $title, 'code' => $code, 'size' => $size, 'user_id' => $user_id]);
             return response()->json(['err' => false, 'msg' => 'saved']);
         } else {
             return response()->json(['err' => true, 'msg' => 'session']);
@@ -71,7 +72,7 @@ class PixController extends Controller
         $pixs = DB::table('pixs')
             ->join('users', 'pixs.user_id', '=', 'users.id')
             ->orderBy('time', 'desc')
-            ->select('pixs.id as pix_id','pixs.title as title','pixs.code as code','users.id as user_id','users.name as username','users.avatar as avatar')
+            ->select('pixs.id as pix_id', 'pixs.title as title', 'pixs.size as size', 'pixs.code as code', 'users.id as user_id', 'users.name as username', 'users.avatar as avatar')
             ->paginate(10);
         return view('discover')->with(['pixs' => $pixs]);
     }

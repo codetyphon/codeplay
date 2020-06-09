@@ -1,7 +1,6 @@
 function NavUser(props) {
     return (
         <Nav className="mr-auto">
-            <Nav.Link href="/discover">发现</Nav.Link>
             <Nav.Link href="/new">创建</Nav.Link>
             {/* <img src={user.avatar} /> */}
             <NavDropdown title={props.user.name} id="basic-nav-dropdown">
@@ -15,8 +14,7 @@ function NavUser(props) {
 function NavNoUser() {
     return (
         <Nav className="mr-auto">
-            <Nav.Link href="/discover">发现</Nav.Link>
-            <Nav.Link href="/login">登陆</Nav.Link>
+            <Nav.Link href="/login">登录</Nav.Link>
         </Nav>
     )
 }
@@ -32,7 +30,7 @@ function Top() {
     }, []);
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="/">主页</Navbar.Brand>
+            <Navbar.Brand href="/discover">发现</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 {user != null ? <NavUser user={user} /> : <NavNoUser />}

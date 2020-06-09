@@ -1,18 +1,23 @@
 function PixEdit(props) {
+    let s = props.size ? props.size : 10;
+    let t = props.title ? props.title : '未命名';
     const [code, setCode] = useState('');
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState(t);
     const [token, setToken] = useState('');
     const [open, setOpen] = useState(false);
     const [msg, setMsg] = useState('');
+    const [size, setSize] = useState(s);
 
     useEffect(() => {
         setToken(props.token);
-        setTitle(props.title);
         setCode(props.code);
     }, []);
 
     let titleChange = (e) => {
         setTitle(e.target.value);
+    }
+    let sizeChange = (e) => {
+        setSize(e.target.value);
     }
     let handleChange = (e) => {
         setCode(e.target.value)
@@ -35,6 +40,7 @@ function PixEdit(props) {
             data: {
                 'title': title,
                 'code': code,
+                'size': size
             },
             success: function (data) {
                 console.log(data);
@@ -52,46 +58,60 @@ function PixEdit(props) {
         });
     }
 
-    // let css = {
-    //     margin: '10px'
-    // }
-    // let code = {
-    //     width: '120px',
-    //     margin: '0 auto',
-    //     textAlign: 'center',
-    //     letterSpacing: '2px'
-    // }
-    // let text = {
-    //     letterSpacing: '5px'
-    // }
     return (
         <div>
-            <h1>
+            <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                    <InputGroup.Text>作品标题</InputGroup.Text>
+                </InputGroup.Prepend>
                 <FormControl
                     onChange={titleChange}
                     value={title}
                     placeholder="title"
-                /></h1>
-            <h3>code:</h3>
-            <FormControl className="edit" as="textarea" rows="10" aria-label="With textarea" value={code} onChange={handleChange} />
+                />
+
+            </InputGroup>
+            <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                    <InputGroup.Text>像素尺寸</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                    onChange={sizeChange}
+                    value={size}
+                    placeholder="size"
+                />
+            </InputGroup>
+            <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                    <InputGroup.Text>画布尺寸</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                    value={200}
+                    readonly
+                    disabled
+                />
+            </InputGroup>
+            <p>颜色代码：数字0-9，大写字母A到G，以及标点符号. </p>
+            <p>每组代码之间必须有,相隔。</p>
+            <div className="flex">
+                <FormControl className="edit" as="textarea" rows="10" aria-label="With textarea" value={code} onChange={handleChange} />
+                <Pix key={Date.now()} size={size} id={props.id} code={code} />
+            </div>
+
+            <Modal show={open} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>提示</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{msg}</Modal.Body>
+                <Modal.Footer>
+
+                    <Button variant="primary" onClick={handleClose}>
+                        ok
+          </Button>
+                </Modal.Footer>
+            </Modal>
             <p>
                 <br></br>
-                <Pix key={code} code={code} />
-            </p>
-            <p>
-                <Modal show={open} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>提示</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>{msg}</Modal.Body>
-                    <Modal.Footer>
-
-                        <Button variant="primary" onClick={handleClose}>
-                            ok
-          </Button>
-                    </Modal.Footer>
-                </Modal>
-
                 <Button variant="primary" onClick={post}>post</Button>
             </p>
         </div>
